@@ -1,9 +1,4 @@
-// Zegju Flashcard Mini App (React + Tailwind + Framer Motion + Sound Effects)
-// Upgraded for category selection, progress bar, fun UAT-themed feedback, timer, and high-end award-level design
-
 import { useEffect, useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { CheckCircle, XCircle, RefreshCw, TimerReset } from 'lucide-react';
@@ -109,9 +104,24 @@ export default function FlashcardApp() {
       <div className="min-h-screen bg-gradient-to-br from-purple-900 to-purple-600 flex items-center justify-center p-6">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-4">
           <h1 className="text-2xl font-bold text-center text-purple-800">Choose a UAT Section</h1>
-          <Button className="w-full bg-gradient-to-r from-pink-500 to-red-500 text-white text-lg rounded-xl py-3" onClick={() => startCategory('verbal')}>Verbal Reasoning</Button>
-          <Button className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-lg rounded-xl py-3" onClick={() => startCategory('quantitative')}>Quantitative Reasoning</Button>
-          <Button className="w-full bg-gradient-to-r from-teal-400 to-blue-500 text-white text-lg rounded-xl py-3" onClick={() => startCategory('analytical')}>Analytical Reasoning</Button>
+          <button
+            className="w-full bg-gradient-to-r from-pink-500 to-red-500 text-white text-lg rounded-xl py-3"
+            onClick={() => startCategory('verbal')}
+          >
+            Verbal Reasoning
+          </button>
+          <button
+            className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-lg rounded-xl py-3"
+            onClick={() => startCategory('quantitative')}
+          >
+            Quantitative Reasoning
+          </button>
+          <button
+            className="w-full bg-gradient-to-r from-teal-400 to-blue-500 text-white text-lg rounded-xl py-3"
+            onClick={() => startCategory('analytical')}
+          >
+            Analytical Reasoning
+          </button>
         </div>
       </div>
     );
@@ -149,16 +159,24 @@ export default function FlashcardApp() {
 
           <div className="grid gap-2">
             {flashcards[current].options.map((option, i) => (
-              <Button
+              <button
                 key={i}
                 onClick={() => handleAnswer(option)}
                 className={`w-full py-3 rounded-xl text-lg border shadow-md font-semibold transition-all duration-200
-                  ${selected && option === flashcards[current].answer ? 'bg-green-100 border-green-500 text-green-900' : ''}
-                  ${selected && option === selected && option !== flashcards[current].answer ? 'bg-red-100 border-red-500 text-red-900' : ''}`}
-                disabled={selected}
+                  ${
+                    selected && option === flashcards[current].answer
+                      ? 'bg-green-100 border-green-500 text-green-900'
+                      : ''
+                  }
+                  ${
+                    selected && option === selected && option !== flashcards[current].answer
+                      ? 'bg-red-100 border-red-500 text-red-900'
+                      : ''
+                  }`}
+                disabled={selected !== null}
               >
                 {option}
-              </Button>
+              </button>
             ))}
           </div>
 
@@ -170,17 +188,28 @@ export default function FlashcardApp() {
             >
               {isCorrect ? (
                 <div className="flex items-center text-green-600">
-                  <CheckCircle className="w-5 h-5 mr-1" /> {feedbackPhrases.correct[Math.floor(Math.random() * feedbackPhrases.correct.length)]} {flashcards[current].explanation}
+                  <CheckCircle className="w-5 h-5 mr-1" />{' '}
+                  {feedbackPhrases.correct[
+                    Math.floor(Math.random() * feedbackPhrases.correct.length)
+                  ]}{' '}
+                  {flashcards[current].explanation}
                 </div>
               ) : (
                 <div className="flex items-center text-red-600">
-                  <XCircle className="w-5 h-5 mr-1" /> {feedbackPhrases.wrong[Math.floor(Math.random() * feedbackPhrases.wrong.length)]} {flashcards[current].explanation}
+                  <XCircle className="w-5 h-5 mr-1" />{' '}
+                  {feedbackPhrases.wrong[
+                    Math.floor(Math.random() * feedbackPhrases.wrong.length)
+                  ]}{' '}
+                  {flashcards[current].explanation}
                 </div>
               )}
               <div className="mt-4">
-                <Button onClick={nextCard} className="bg-purple-700 hover:bg-purple-800 text-white w-full py-3 text-lg rounded-xl shadow-lg">
-                  <RefreshCw className="w-4 h-4 mr-2" /> Next Card
-                </Button>
+                <button
+                  onClick={nextCard}
+                  className="bg-purple-700 hover:bg-purple-800 text-white w-full py-3 text-lg rounded-xl shadow-lg flex items-center justify-center gap-2"
+                >
+                  <RefreshCw className="w-4 h-4" /> Next Card
+                </button>
               </div>
             </motion.div>
           )}
